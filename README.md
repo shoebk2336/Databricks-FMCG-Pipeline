@@ -198,22 +198,24 @@ Files are moved from landing/ to processed/ after successful Bronze ingestion to
 databricks-medallion-pipeline/
 |
 |-- notebooks/
-|   |-- 01_bronze_ingestion.py        # S3 --> Bronze
-|   |-- 02_silver_transformations.py   # Bronze --> Silver (7 transforms)
-|   |-- 03_gold_aggregation.py         # Silver --> Gold (star schema)
-|   |-- 04_upsert_to_parent.py         # Gold --> Parent Gold (MERGE)
-|   |-- 05_file_management.py          # Landing --> Processed
+|   |-- 01_1_Facts_orders.py        
+|   |-- 02_1_customer.py   
+|   |-- 03_1_incremental.py   
+|   |-- 04_1_products.py     
+|   |-- 05_1_setup.py     
+|   |-- 06_price.py
+|   |-- 07_utils.py
 |
-|-- configs/
-|   |-- pipeline_config.json
 |
-|-- docs/
-|   |-- architecture_diagram.png
-|   |-- star_schema.png
-|   |-- project_report.pdf
+|--raw_data/
+|--Gold_layer_Parent_company/
+|-- Screenshots/
+|   
+|   
+|  
 |
 |-- README.md
-|-- requirements.txt
+|
 ```
 
 ---
@@ -230,12 +232,12 @@ databricks-medallion-pipeline/
 3. Configure S3 paths in configs/pipeline_config.json:
    ```json
    {
-     "landing_path": "s3://acquired-company/landing/",
-     "processed_path": "s3://acquired-company/processed/",
-     "bronze_path": "/mnt/acquired/bronze/",
-     "silver_path": "/mnt/acquired/silver/",
-     "gold_path": "/mnt/acquired/gold/",
-     "parent_gold_path": "/mnt/parent-company/gold/"
+    bronze_schema='bronze';
+    silver_schema='silver';
+    gold_schema='gold';
+    base_path="s3://fmcg-databricks-pipeline/raw_data";
+    landing_path="s3://fmcg-databricks-pipeline/raw_data/orders/landing";
+    processed_path="s3://fmcg-databricks-pipeline/raw_data/orders/processed";
    }
    ```
 
